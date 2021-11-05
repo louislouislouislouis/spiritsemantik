@@ -1,11 +1,29 @@
 import React, { useState } from "react";
+import { useHttpClient } from "../Hooks/http-hook";
 import "./Home.css";
 import fond from "../Assets/img/pexels-koolshooters-8513129.jpg";
+import requests from "../Assets/json/request.json";
 const Home = () => {
+  //
   const [searchValue, setsearchValue] = useState("");
-  const submitHandler = (e) => {
+  // Http Manager
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+  //
+  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(searchValue);
+
+    const contenu_requete = requests.base_request;
+    const full_req = contenu_requete.replace("$$$BASE_VAL$$$", searchValue);
+    const url =
+      "http://dbpedia.org/sparql?query=" +
+      encodeURIComponent(full_req) +
+      "&format=json";
+
+    try {
+      const rep = await sendRequest(url);
+      console.log(rep);
+    } catch {}
   };
   const changHandler = (e) => {
     setsearchValue(e.target.value);
