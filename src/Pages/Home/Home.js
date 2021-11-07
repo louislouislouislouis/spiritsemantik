@@ -140,7 +140,6 @@ const Home = () => {
   };
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(searchValue);
     navigate(`/search/${searchValue}`);
   };
 
