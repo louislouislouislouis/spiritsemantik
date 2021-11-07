@@ -1,13 +1,22 @@
+//React Necessities
 import React, { useState, useEffect } from "react";
+
+//Custom Component
+import LineResult from "../Component/LineResult/LineResult";
+
+//Custom Hooks
 import { useHttpClient } from "../Hooks/http-hook";
+
+//Style
 import "./Home.css";
 
-//assets
+//Img
 import star from "../Assets/img/star.png";
 import wallet from "../Assets/img/wallet.png";
 import chercher from "../Assets/img/chercher.png";
+
+//Requests
 import requests from "../Assets/json/request.json";
-import LineResult from "../Component/LineResult/LineResult";
 
 const Home = () => {
   //State Var
