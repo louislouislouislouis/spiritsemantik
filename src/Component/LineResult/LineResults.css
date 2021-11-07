@@ -1,5 +1,4 @@
 .lineresults {
-  background: rgba(0, 0, 0, 0.05);
   border-radius: 12px;
   margin-top: 1px;
   margin-bottom: 1px;
@@ -8,6 +7,9 @@
   align-items: center;
   position: relative;
   justify-content: space-between;
+}
+.lineresults_select {
+  background: rgba(0, 0, 0, 0.05);
 }
 .lineresults .right {
   display: flex;

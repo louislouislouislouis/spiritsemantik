@@ -56,14 +56,16 @@
   flex-direction: column;
   transition: all 0.4s cubic-bezier(0.86, 0.01, 0.27, 0.99);
   max-height: 10vh;
+  min-height: 10vh;
   overflow: hidden;
+  backdrop-filter: blur(4px);
 }
 .mainPage .plane_focus {
   max-height: 50vh;
+  min-height: 30px;
 }
 .mainPage .mainPlane .search_form {
   height: 10vh;
-  min-height: px;
   max-height: 120px;
 }
 .mainPage .mainPlane .separator {
@@ -87,9 +89,10 @@
   font-weight: 300;
   font-size: 36px;
   line-height: 42px;
-
+  width: calc(100% - 120px);
   color: #000000;
 }
+
 .mainPage .mainPlane .form .search_form {
   display: flex;
 }
@@ -102,11 +105,12 @@
 .mainPage .mainPlane .form .search_form .img_icon img {
   width: 35%;
 }
-.mainPage .mainPlane .result .prev {
+.mainPage .mainPlane .result .prev,
+.mainPage .mainPlane .result .suggestions {
   margin: 25px;
 }
 
-.mainPage .mainPlane .result .prev .label {
+.mainPage .mainPlane .result .label {
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;

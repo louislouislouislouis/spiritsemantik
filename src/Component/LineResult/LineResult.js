@@ -9,19 +9,23 @@ import "./LineResults.css";
 
 const LineResult = (props) => {
   return (
-    <div className="lineresults">
+    <div
+      className={`lineresults ${props.isSelected ? "lineresults_select" : ""}`}
+    >
       <div className="right">
         <div className="type">
           <div className="text">{props.type || "Saint"}</div>
         </div>
         <div className="value"> {props.result}</div>
       </div>
-      <div className="left">
-        <div className="selector">
-          <div className="text">Select</div>
-          <img src={enter} alt="" />
+      {props.isSelected && (
+        <div className="left">
+          <div className="selector">
+            <div className="text">Select</div>
+            <img src={enter} alt="" />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
