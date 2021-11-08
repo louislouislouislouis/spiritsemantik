@@ -12,8 +12,8 @@ import "./App.css";
 function App() {
   return (
     <Router>
+      <Home />
       <Routes>
-        <Route path="/" element={<Home />}></Route>
         <Route path="/search/:qid" element={<SearchResult />}></Route>
       </Routes>
     </Router>
