@@ -45,7 +45,7 @@ const Home = () => {
   useEffect(() => {
     const requestHandler = async () => {
       console.log("A request has been sent");
-      const contenu_requete = requests.base_request;
+      const contenu_requete = requests.prefix + requests.base_request;
       const full_req = contenu_requete.replace("$$$BASE_VAL$$$", searchValue);
       const url =
         "http://dbpedia.org/sparql?query=" +
@@ -95,7 +95,7 @@ const Home = () => {
             });
             setabbleRequest(false);
             setsearchValue(
-              previewResult.preview[index - 1].val.isValueOf.value.substring(28)
+              previewResult.preview[index - 1].val.label.value
             );
             e.stopPropagation();
             e.preventDefault();
@@ -114,7 +114,7 @@ const Home = () => {
             });
             setabbleRequest(false);
             setsearchValue(
-              previewResult.preview[index + 1].val.isValueOf.value.substring(28)
+              previewResult.preview[index + 1].val.label.value
             );
             e.stopPropagation();
             e.preventDefault();
@@ -199,7 +199,7 @@ const Home = () => {
                     {previewResult.preview.map((preview) => {
                       return (
                         <LineResult
-                          result={preview.val.isValueOf.value.substring(28)}
+                          result={preview.val.label.value}
                           type="Saint"
                           isSelected={preview.isSelected}
                         />
