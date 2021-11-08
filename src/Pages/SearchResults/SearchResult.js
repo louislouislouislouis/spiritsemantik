@@ -19,34 +19,6 @@ import "./SearchResult.css";
 //Requests
 import requests from "../../Assets/json/request.json";
 
-//To change
-const DUMMYCARD = [
-  {
-    bio: "Muhammad Ali — nom couramment retranscrit en français Mohamed Ali ou Mohammed Ali1 — né le 17 janvier 1942 à Louisville au Kentucky et mort le 3 juin 2016 à Scottsdale en Arizona2, est un boxeur américain évoluant en catégorie poids lourds, considéré comme un des plus grands boxeurs de tous les temps...",
-    title: "Mohammed Ali",
-    url: "monurl",
-    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Muhammad_Ali_NYWTS.jpg/1280px-Muhammad_Ali_NYWTS.jpg",
-  },
-  {
-    bio: "Muhammad Ali — nom couramment retranscrit en français Mohamed Ali ou Mohammed Ali1 — né le 17 janvier 1942 à Louisville au Kentucky et mort le 3 juin 2016 à Scottsdale en Arizona2, est un boxeur américain évoluant en catégorie poids lourds, considéré comme un des plus grands boxeurs de tous les temps...",
-    title: "Mohammed Ali",
-    url: "monurl",
-    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Muhammad_Ali_NYWTS.jpg/1280px-Muhammad_Ali_NYWTS.jpg",
-  },
-  {
-    bio: "Muhammad Ali — nom couramment retranscrit en français Mohamed Ali ou Mohammed Ali1 — né le 17 janvier 1942 à Louisville au Kentucky et mort le 3 juin 2016 à Scottsdale en Arizona2, est un boxeur américain évoluant en catégorie poids lourds, considéré comme un des plus grands boxeurs de tous les temps...",
-    title: "Mohammed Ali",
-    url: "monurl",
-    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Muhammad_Ali_NYWTS.jpg/1280px-Muhammad_Ali_NYWTS.jpg",
-  },
-  {
-    bio: "Muhammad Ali — nom couramment retranscrit en français Mohamed Ali ou Mohammed Ali1 — né le 17 janvier 1942 à Louisville au Kentucky et mort le 3 juin 2016 à Scottsdale en Arizona2, est un boxeur américain évoluant en catégorie poids lourds, considéré comme un des plus grands boxeurs de tous les temps...",
-    title: "Mohammed Ali",
-    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Muhammad_Ali_NYWTS.jpg/1280px-Muhammad_Ali_NYWTS.jpg",
-    url: "monurl",
-  },
-];
-
 const SearchResult = (props) => {
   const [results, setresults] = useState([]);
 
@@ -72,7 +44,7 @@ const SearchResult = (props) => {
 
       try {
         const rep = await sendRequest(url);
-        console.log(rep);
+
         setresults(rep.results.bindings);
       } catch (error) {
         console.log(error);
@@ -85,7 +57,6 @@ const SearchResult = (props) => {
     console.log("ee");
     navigate(`/${params.qid}/${e}`);
   };
-  console.log(results);
   return (
     <React.Fragment>
       <div className="results_cards">
@@ -96,9 +67,11 @@ const SearchResult = (props) => {
                 bio={el.desc.value}
                 title={el.label.value}
                 img={
-                  el.pic ? el.pic.value : "https://i.stack.imgur.com/6M513.png"
+                  el.pic
+                    ? el.pic.value
+                    : "https://scontent-mrs2-2.xx.fbcdn.net/v/t1.6435-9/132803884_3675306175922204_633656899173464801_n.jpg?_nc_cat=108&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=mMpMLojgemsAX-LHk5t&_nc_ht=scontent-mrs2-2.xx&oh=8908c538e8d2fb8a7bed85418ea765c5&oe=61AD16F9"
                 }
-                onClickAction={() => onClickAction(el.lien.value)}
+                onClickAction={() => onClickAction(el.lien.value.substring(28))}
               />
             </div>
           );
