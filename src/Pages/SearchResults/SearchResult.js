@@ -64,7 +64,9 @@ const SearchResult = (props) => {
     const requestHandler = async () => {
       console.log("A request has been sent");
       const contenu_requete = requests.prefix + requests.desc_request;
-      const full_req = contenu_requete.replace("$$$BASE_VAL$$$", params.qid);
+      const full_req = contenu_requete
+          .replace("$$$BASE_VAL_LOWER$$$", params.qid.toLowerCase())
+          .replace("$$$BASE_VAL_UPPER$$$", params.qid.charAt(0).toUpperCase() + params.qid.slice(1));
       const url =
         "http://dbpedia.org/sparql?query=" +
         encodeURIComponent(full_req) +
