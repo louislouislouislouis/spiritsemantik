@@ -36,7 +36,11 @@ const SearchResult = () => {
   return (
     <div className="results_cards">
       {DUMMYCARD.map((el) => {
-        return <CardResult bio={el.bio} title={el.title} img={el.img} />;
+        return (
+          <div className="ext_container">
+            <CardResult bio={el.bio} title={el.title} img={el.img} />
+          </div>
+        );
       })}
     </div>
   );

@@ -3,3 +3,9 @@
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 1fr;
 }
+.ext_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 50px;
+}

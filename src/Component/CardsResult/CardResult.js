@@ -5,7 +5,7 @@ import React from "react";
 import "./CardResult.css";
 const CardResult = (props) => {
   return (
-    <div className="cardcontainer">
+    <div className="cardcontainer" onClick={props.onClickAction}>
       <div className="header">
         <div className="img">
           <img src={props.img} alt="" />
