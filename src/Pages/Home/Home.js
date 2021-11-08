@@ -53,7 +53,7 @@ const Home = () => {
 
         setpreviewResult((old) => {
           let real_results = rep.results.bindings.map((el, index) => {
-            return { val: el, isSelected: index === 0 ? true : false };
+            return { val: el, isSelected: index === 0 };
           });
           return { ...old, preview: real_results };
         });
