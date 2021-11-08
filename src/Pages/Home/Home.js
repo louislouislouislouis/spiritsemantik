@@ -146,7 +146,7 @@ const Home = () => {
   };
   const submitHandler = async (e) => {
     e.preventDefault();
-    navigate(`/search/${searchValue}`);
+    navigate(`/${searchValue}/0`);
   };
 
   return (
