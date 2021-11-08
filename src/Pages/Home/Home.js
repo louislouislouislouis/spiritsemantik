@@ -192,7 +192,7 @@ const Home = () => {
                       return (
                         <LineResult
                           result={preview.val.label.value}
-                          type="Saint"
+                          type={preview.val.titre.value.split(",")[0]}
                           isSelected={preview.isSelected}
                         />
                       );
