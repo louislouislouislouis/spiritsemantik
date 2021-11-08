@@ -3,6 +3,7 @@ import React from "react";
 
 //Style
 import "./CardResult.css";
+
 const CardResult = (props) => {
   return (
     <div className="cardcontainer" onClick={props.onClickAction}>
