@@ -1,11 +1,13 @@
 //React Necessities
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   BrowserRouter as Router,
   useParams,
   useNavigate,
 } from "react-router-dom";
+//Custom Hooks
+import { useHttpClient } from "../../Hooks/http-hook";
 
 //Custom Component
 import CardResult from "../../Component/CardsResult/CardResult";
@@ -13,6 +15,9 @@ import Wiki from "../Wiki/Wiki";
 
 //Style
 import "./SearchResult.css";
+
+//Requests
+import requests from "../../Assets/json/request.json";
 
 //To change
 const DUMMYCARD = [
@@ -42,32 +47,64 @@ const DUMMYCARD = [
   },
 ];
 
-const SearchResult = () => {
+const SearchResult = (props) => {
+  const [results, setresults] = useState([]);
+
   //URL Navigation
   const navigate = useNavigate();
+
+  //hhtp
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+  //url
+  const params = useParams();
+
+  //new request every time url change
+  useEffect(() => {
+    const requestHandler = async () => {
+      console.log("A request has been sent");
+      const contenu_requete = requests.prefix + requests.desc_request;
+      const full_req = contenu_requete.replace("$$$BASE_VAL$$$", params.qid);
+      const url =
+        "http://dbpedia.org/sparql?query=" +
+        encodeURIComponent(full_req) +
+        "&format=json";
+
+      try {
+        const rep = await sendRequest(url);
+        console.log(rep);
+        setresults(rep.results.bindings);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    requestHandler();
+  }, [params.qid]);
 
   const onClickAction = (e) => {
     console.log("ee");
     navigate(`/${params.qid}/${e}`);
   };
-  const params = useParams();
+  console.log(results);
   return (
     <React.Fragment>
       <div className="results_cards">
-        {DUMMYCARD.map((el) => {
+        {results.map((el) => {
           return (
             <div className="ext_container">
               <CardResult
-                bio={el.bio}
-                title={el.title}
-                img={el.img}
-                onClickAction={() => onClickAction(el.url)}
+                bio={el.desc.value}
+                title={el.label.value}
+                img={
+                  el.pic ? el.pic.value : "https://i.stack.imgur.com/6M513.png"
+                }
+                onClickAction={() => onClickAction(el.lien.value)}
               />
             </div>
           );
         })}
       </div>
-      {params.uid !== "0" && <Wiki />}
+      {params.uid !== "0" && <Wiki url={params.uid} />}
     </React.Fragment>
   );
 };

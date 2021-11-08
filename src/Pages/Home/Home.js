@@ -1,15 +1,9 @@
 //React Necessities
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, useNavigate } from "react-router-dom";
 
 //Custom Component
 import LineResult from "../../Component/LineResult/LineResult";
-import SearchResult from "../SearchResults/SearchResult";
 //Custom Hooks
 import { useHttpClient } from "../../Hooks/http-hook";
 import { useEventListener } from "../../Hooks/EventListener";
@@ -96,9 +90,7 @@ const Home = () => {
               return { ...old, preview: new_prev };
             });
             setabbleRequest(false);
-            setsearchValue(
-              previewResult.preview[index - 1].val.label.value
-            );
+            setsearchValue(previewResult.preview[index - 1].val.label.value);
             e.stopPropagation();
             e.preventDefault();
             break;
@@ -115,9 +107,7 @@ const Home = () => {
               return { ...old, preview: new_prev };
             });
             setabbleRequest(false);
-            setsearchValue(
-              previewResult.preview[index + 1].val.label.value
-            );
+            setsearchValue(previewResult.preview[index + 1].val.label.value);
             e.stopPropagation();
             e.preventDefault();
             break;
