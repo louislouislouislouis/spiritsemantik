@@ -5,6 +5,9 @@ import { useParams } from "react-router";
 //Custom Component
 import CardResult from "../../Component/CardsResult/CardResult";
 
+//Style
+import "./SearchResult.css";
+
 //To change
 const DUMMYCARD = [
   {
