@@ -1,6 +1,6 @@
 .mainPage {
   width: 100vw;
-  height: 100vh;
+
   position: relative;
   display: flex;
   align-items: flex-start;
@@ -16,17 +16,17 @@
 
   color: #000000;
 }
-.mainPage .firstPlane,
-.mainPage .lastPlane {
+.firstPlane,
+.lastPlane {
   position: absolute;
 }
-.mainPage .firstPlane {
+.firstPlane {
   z-index: 2;
   right: calc(22.5% - 190px);
   top: calc(27% - 190px);
   width: 322px;
 }
-.mainPage .lastPlane {
+.lastPlane {
   z-index: -2;
   left: calc(19.5% - 190px);
   bottom: calc(27% - 190px);
@@ -50,7 +50,8 @@
   max-width: 1090px;
 
   position: relative;
-  top: 28vh;
+  margin-top: 28vh;
+  margin-bottom: 50px;
 
   display: flex;
   flex-direction: column;

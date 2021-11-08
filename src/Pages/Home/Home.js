@@ -1,9 +1,15 @@
 //React Necessities
 import React, { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom";
+
 //Custom Component
 import LineResult from "../../Component/LineResult/LineResult";
-
+import SearchResult from "../SearchResults/SearchResult";
 //Custom Hooks
 import { useHttpClient } from "../../Hooks/http-hook";
 import { useEventListener } from "../../Hooks/EventListener";
@@ -145,10 +151,13 @@ const Home = () => {
 
   return (
     <React.Fragment>
+      <div className="firstPlane">
+        <img className="img_secondary_pane" src={star} alt="background" />
+      </div>
+      <div className="lastPlane">
+        <img className="img_secondary_pane" src={wallet} alt="background" />
+      </div>
       <div className="mainPage">
-        <div className="firstPlane">
-          <img className="img_secondary_pane" src={star} alt="background" />
-        </div>
         <div className={`mainPlane ${isFocus ? "plane_focus" : ""}`}>
           <div
             className="form"
@@ -201,9 +210,6 @@ const Home = () => {
               </div>
             </React.Fragment>
           )}
-        </div>
-        <div className="lastPlane">
-          <img className="img_secondary_pane" src={wallet} alt="background" />
         </div>
       </div>
     </React.Fragment>
