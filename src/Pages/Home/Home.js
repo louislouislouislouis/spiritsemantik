@@ -41,8 +41,11 @@ const Home = () => {
       console.log("A request has been sent");
       const contenu_requete = requests.prefix + requests.base_request;
       const full_req = contenu_requete
-          .replace("$$$BASE_VAL_LOWER$$$", searchValue.toLowerCase())
-          .replace("$$$BASE_VAL_UPPER$$$", searchValue.charAt(0).toUpperCase() + searchValue.slice(1));
+        .replace("$$$BASE_VAL_LOWER$$$", searchValue.toLowerCase())
+        .replace(
+          "$$$BASE_VAL_UPPER$$$",
+          searchValue.charAt(0).toUpperCase() + searchValue.slice(1)
+        );
       const url =
         "http://dbpedia.org/sparql?query=" +
         encodeURIComponent(full_req) +
@@ -192,7 +195,9 @@ const Home = () => {
                       return (
                         <LineResult
                           result={preview.val.label.value}
-                          type={preview.val.titre.value.split(",")[0]}
+                          type={
+                            preview.val.titre.value.split(",")[0].split(" ")[0]
+                          }
                           isSelected={preview.isSelected}
                         />
                       );
