@@ -4,6 +4,8 @@ import { BrowserRouter as Router, useNavigate } from "react-router-dom";
 
 //Custom Component
 import LineResult from "../../Component/LineResult/LineResult";
+import Filter from "../../Component/Filter/Filter";
+
 //Custom Hooks
 import { useHttpClient } from "../../Hooks/http-hook";
 import { useEventListener } from "../../Hooks/EventListener";
@@ -18,7 +20,7 @@ import chercher from "../../Assets/img/chercher.png";
 
 //Requests
 import requests from "../../Assets/json/request.json";
-import Filter from "../../Component/Filter/Filter";
+import fullreq from "../../Assets/request/full_req.js";
 
 const Home = () => {
   //State Var
@@ -167,6 +169,7 @@ const Home = () => {
         location: e.currentLocation
       };
     });
+    console.log(fullreq);
   };
 
   console.log(active_filter);

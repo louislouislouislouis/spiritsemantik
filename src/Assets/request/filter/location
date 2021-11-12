@@ -1,1 +1,0 @@
-FILTER (regex(str(?birthPlace), "$$$LOCATION$$$") || regex(str(?deathPlace), "$$$LOCATION$$$")).

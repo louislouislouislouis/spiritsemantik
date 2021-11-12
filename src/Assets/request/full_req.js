@@ -1,3 +1,4 @@
+const fullreq = `
 SELECT ?lien ?label ?desc ?pic ?birthYear ?deathYear ?birthPlace ?deathPlace
 WHERE {
  	?lien a <http://dbpedia.org/ontology/Saint>;
@@ -14,4 +15,6 @@ WHERE {
     $$$FILTER_VAL_DATE$$$
     $$$FILTER_VAL_LOCATION$$$
 }
-GROUP BY ?label
+GROUP BY ?label`;
+
+export default fullreq;
