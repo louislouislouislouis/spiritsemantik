@@ -14,6 +14,7 @@ import "./SearchResult.css";
 
 //Requests
 import requests from "../../Assets/json/request.json";
+import { createRequest } from "../../Assets/request/request_creator";
 
 const SearchResult = (props) => {
   const [results, setresults] = useState([]);
@@ -41,17 +42,33 @@ const SearchResult = (props) => {
           "$$$BASE_VAL_UPPER$$$",
           params.qid.charAt(0).toUpperCase() + params.qid.slice(1)
         );
+
+      //create request with filter on url
+      const filter = JSON.parse(
+        new URLSearchParams(history.location.search).get("f")
+      );
+      const req = createRequest("get_query_val", params.qid, {
+        ...(filter.location && { location: filter.location }),
+        ...(filter.language && { language: filter.language }),
+        ...(filter.birthDateRange && {
+          time: {
+            date1:
+              filter.birthDateRange[0] < 100
+                ? "0001-01-01"
+                : filter.birthDateRange[0].toString() + "-01-01",
+            date2:
+              filter.birthDateRange[1] < 100
+                ? "0001-01-01"
+                : filter.birthDateRange[1].toString() + "-01-01",
+          },
+        }),
+      });
+
       const url =
         "http://dbpedia.org/sparql?query=" +
-        encodeURIComponent(full_req) +
+        encodeURIComponent(req) +
         "&format=json";
-      ////apply to filter state
-      //setactive_filter(JSON.parse(params.get("f")));
-      /* const req = createRequest("get_query_val", searchValue, {
-        location: ["Test"],
-        language: "en",
-        time: { date1: "dr", date2: "ded" },
-      }); */
+      console.log(req);
       try {
         const rep = await sendRequest(url);
         console.log(rep);

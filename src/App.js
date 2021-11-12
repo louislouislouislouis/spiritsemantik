@@ -16,7 +16,6 @@ function App() {
       <Switch>
         <Route path="/:qid/:uid">
           <SearchResult />
-          <div className="dede">dezfer</div>
         </Route>
       </Switch>
     </Router>
