@@ -15,7 +15,7 @@ const Filter = (props) => {
   const [language, setLanguage] = useState("en");
   const [isFilter, setisFilter] = useState(false);
   const [birthDateRange, setbirthDateRange] = useState([-100, 2000]);
-  const [location, setLocation] = useState(["Paris", "Marseille", "Dresde"]);
+  const [location, setLocation] = useState([]);
 
   const languageHandler = (e) => {
     setLanguage(e.target.value);
@@ -37,10 +37,16 @@ const Filter = (props) => {
     }
   };
 
+  const handleLocationDisable = (e) => {
+    console.log("Ich möchte das weg haben");
+    console.log(e.target.value);
+    //TODO remove e.target.value from location
+  }
+
   const submitHandler = (e) => {
     console.log("submitted");
 
-    props.onSubmitFilteree({
+    props.onSubmitFilter({
       currentLanguage: language,
       currentBirthDateRange: birthDateRange,
       currentLocation: location
@@ -99,12 +105,16 @@ const Filter = (props) => {
         <input type="text" id="input_location" name="location" placeholder="Location" />
         <button onClick={locationHandler} >Add</button>
       </div>
+      {location.map((loc) => {
+        return (
+            <div className={`filter ${isFilter ? "visible" : "hidden"}`}>
+              <button onClick={handleLocationDisable} value={loc} >{loc} X</button>
+            </div>
+        );
+      })}
       <div className={`submitButton ${isFilter ? "visible" : "hidden"}`}>
         <button onClick={submitHandler}>Submit</button>
       </div>
-      {location.map((loc) => {
-        return <div>{loc}</div>;
-      })}
     </React.Fragment>
   );
 };
