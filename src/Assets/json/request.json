@@ -6,5 +6,3 @@
   "lived_request": "SELECT ?lien ?label ?desc ?pic WHERE { ?lien a <http://dbpedia.org/ontology/Saint>; a dbo:Person; rdfs:label ?label; rdfs:comment ?desc. {?lien dbo:birthPlace \"$$$PLACE_VAL$$$\".} Union {?lien dbo:deathPlace \"$$$PLACE_VAL$$$\".} OPTIONAL { ?lien dbo:thumbnail ?pic. } FILTER (lang(?label) = 'en'). FILTER (lang(?desc) = 'en'). }",
   "beatifiedby_request": "SELECT ?label (COALESCE(?optionalTitle, \"Saint\") as ?titre)WHERE { ?lien a <http://dbpedia.org/ontology/Saint>;a dbo:Person;rdfs:label ?label . {?lien dbo:beatifiedBy :$$$BEATIFIER$$$.} . OPTIONAL {?lien dbo:title ?optionalTitle.} FILTER (regex(ctr(?label), \"$$$BASE_VAL_LOWER$$$\") || regex(str(?label), \"$$$BASE_VAL_UPPER$$$\")) . FILTER (lang(?label) = 'en'). }"
 }
-
-
