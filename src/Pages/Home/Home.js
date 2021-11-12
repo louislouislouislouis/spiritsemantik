@@ -58,9 +58,6 @@ const Home = () => {
           "$$$BASE_VAL_UPPER$$$",
           searchValue.charAt(0).toUpperCase() + searchValue.slice(1)
         );
-      const filter = JSON.parse(
-        new URLSearchParams(history.location.search).get("f")
-      );
 
       const url =
         "http://dbpedia.org/sparql?query=" +
