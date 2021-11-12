@@ -14,7 +14,7 @@ const Range = createSliderWithTooltip(Slider.Range);
 const Filter = (props) => {
   const [language, setLanguage] = useState("en");
   const [isFilter, setisFilter] = useState(false);
-  const [birthDateRange, setbirthDateRange] = useState([100, 1500]);
+  const [birthDateRange, setbirthDateRange] = useState([-100, 2000]);
   const [location, setLocation] = useState(["Paris", "Marseille", "Dresde"]);
 
   const languageHandler = (e) => {
@@ -30,14 +30,19 @@ const Filter = (props) => {
     setbirthDateRange(data);
   };
 
+  const locationHandler = (e) => {
+    setLocation((old) => [...old,document.getElementById("input_location").value]);
+  };
+
   const submitHandler = (e) => {
     console.log("submitted");
 
     props.onSubmitFilteree({
       currentLanguage: language,
       currentBirthDateRange: birthDateRange,
+      currentLocation: location
     });
-    setLocation((old) => [...old, "test"]);
+
   };
   console.log(birthDateRange);
   return (
@@ -72,17 +77,24 @@ const Filter = (props) => {
           dots={true}
           onChange={birthDateHandler}
           tipFormatter={(value) =>
-            `${value < 0 ? `${-value}bc` : `${value}ac`}`
+            `${value < 0 ? `${-value} b.C.` : `${value} a.C.`}`
           }
           marks={{
-            [-100]: `${"-100 av jc"}`,
-            [2000]: `${"10000 av jc"}`,
+            [-100]: `${"100 b.C."}`,
+            [2000]: `${"2000 a.C."}`,
           }}
           tipProps={{
             placement: "top",
             visible: true,
           }}
         />
+      <br/>
+      <br/>
+      </div>
+      <div className={`filter ${isFilter ? "visible" : "hidden"}`}>
+        <label htmlFor="selectLocation">Select Location: </label>
+        <input type="text" id="input_location" name="location" placeholder="Location" />
+        <button onClick={locationHandler} >Add</button>
       </div>
       <div className={`submitButton ${isFilter ? "visible" : "hidden"}`}>
         <button onClick={submitHandler}>Submit</button>
