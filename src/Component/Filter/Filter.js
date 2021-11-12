@@ -1,6 +1,12 @@
+// React Necessities
 import React, { useEffect, useState } from "react";
+
+//Slider React
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+
+//Styles
+import "./Filter.css";
 
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Range = createSliderWithTooltip(Slider.Range);
@@ -19,19 +25,20 @@ const Filter = (props) => {
     setisFilter((old) => !old);
   };
 
-  const birthDateHandler = (e, data) => {
+  const birthDateHandler = (data) => {
+    console.log(data);
     setbirthDateRange(data);
   };
 
   const submitHandler = (e) => {
     console.log("submitted");
 
-    props.onSubmitFilter({
+    props.onSubmitFilteree({
       currentLanguage: language,
       currentBirthDateRange: birthDateRange,
     });
   };
-
+  console.log(birthDateRange);
   return (
     <React.Fragment>
       <div className="filterButton">
