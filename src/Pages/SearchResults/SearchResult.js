@@ -1,11 +1,7 @@
 //React Necessities
 import React, { useEffect, useState } from "react";
 
-import {
-  BrowserRouter as Router,
-  useParams,
-  useNavigate,
-} from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 //Custom Hooks
 import { useHttpClient } from "../../Hooks/http-hook";
 
@@ -23,16 +19,19 @@ const SearchResult = (props) => {
   const [results, setresults] = useState([]);
 
   //URL Navigation
-  const navigate = useNavigate();
 
   //hhtp
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   //url
   const params = useParams();
-
+  const history = useHistory();
   //new request every time url change
   useEffect(() => {
+    const filter = JSON.parse(
+      new URLSearchParams(history.location.search).get("f")
+    );
+    console.log(filter);
     const requestHandler = async () => {
       console.log("A request has been sent");
       const contenu_requete = requests.prefix + requests.desc_request;
@@ -46,10 +45,16 @@ const SearchResult = (props) => {
         "http://dbpedia.org/sparql?query=" +
         encodeURIComponent(full_req) +
         "&format=json";
-
+      ////apply to filter state
+      //setactive_filter(JSON.parse(params.get("f")));
+      /* const req = createRequest("get_query_val", searchValue, {
+        location: ["Test"],
+        language: "en",
+        time: { date1: "dr", date2: "ded" },
+      }); */
       try {
         const rep = await sendRequest(url);
-
+        console.log(rep);
         setresults(rep.results.bindings);
         console.log("rerr");
         window.scrollTo({
@@ -64,7 +69,7 @@ const SearchResult = (props) => {
   }, [params.qid]);
 
   const onClickAction = (e) => {
-    navigate(`/${params.qid}/${e}`);
+    history.push(`/${params.qid}/${e}`);
   };
   return (
     <React.Fragment>

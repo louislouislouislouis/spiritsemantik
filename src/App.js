@@ -1,6 +1,6 @@
 //React necessities
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 //Custom Page
 import Home from "./Pages/Home/Home";
@@ -13,9 +13,12 @@ function App() {
   return (
     <Router>
       <Home />
-      <Routes>
-        <Route path="/:qid/:uid" element={<SearchResult />}></Route>
-      </Routes>
+      <Switch>
+        <Route path="/:qid/:uid">
+          <SearchResult />
+          <div className="dede">dezfer</div>
+        </Route>
+      </Switch>
     </Router>
   );
 }

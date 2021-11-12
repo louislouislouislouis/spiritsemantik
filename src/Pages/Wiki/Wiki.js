@@ -6,7 +6,6 @@ import { useHttpClient } from "../../Hooks/http-hook";
 import requests from "../../Assets/json/request.json";
 
 const Wiki = () => {
-  const navigate = useNavigate();
   const location = useLocation();
   //hhtp
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -40,6 +39,7 @@ const Wiki = () => {
     };
     requestHandler();
   }, [location]);
+
   useEffect(() => {
     const requestHandler = async () => {
       console.log("A request has been sent base on first req");
@@ -76,12 +76,12 @@ const Wiki = () => {
 
   const onClickAction = (e) => {
     console.log("ee");
-    navigate(`/${params.qid}/${e}`);
+    //navigate(`/${params.qid}/${e}`);
   };
   const quithandler = (e) => {
     console.log("ee");
     if (e.currentTarget === e.target) {
-      navigate(`/${params.qid}/0`);
+      //navigate(`/${params.qid}/0`);
     }
   };
 

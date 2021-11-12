@@ -1,6 +1,10 @@
 //React Necessities
 import React, { useState, useEffect, useCallback } from "react";
-import { BrowserRouter as Router, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  useLocation,
+  useHistory,
+} from "react-router-dom";
 
 //Custom Component
 import LineResult from "../../Component/LineResult/LineResult";
@@ -31,7 +35,6 @@ const Home = () => {
     suggestions: [],
     preview: [],
   });
-
   const [active_filter, setactive_filter] = useState({
     language: "en",
     birthDateRange: [-100, 2000],
@@ -39,7 +42,7 @@ const Home = () => {
   });
 
   //URL Navigation
-  const navigate = useNavigate();
+  const history = useHistory();
 
   // Http Manager
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -55,6 +58,10 @@ const Home = () => {
           "$$$BASE_VAL_UPPER$$$",
           searchValue.charAt(0).toUpperCase() + searchValue.slice(1)
         );
+      const filter = JSON.parse(
+        new URLSearchParams(history.location.search).get("f")
+      );
+
       const url =
         "http://dbpedia.org/sparql?query=" +
         encodeURIComponent(full_req) +
@@ -151,16 +158,24 @@ const Home = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    navigate(`/${searchValue}/0`);
+    history.push({
+      pathname: `/${searchValue}/0`,
+      search: `f=${encodeURIComponent(JSON.stringify(active_filter))}`,
+    });
   };
   const onhoverhandler = async (e) => {
     e.preventDefault();
-    navigate(`/${searchValue}/0`);
   };
+  useEffect(() => {
+    console.log("Filter has change! update url");
+    history.push({
+      pathname: `.`,
+      search: `f=${encodeURIComponent(JSON.stringify(active_filter))}`,
+    });
+  }, [active_filter]);
 
   const submitFilterHandler = (e) => {
-    console.log("la fonction submitFilterHandler a été appelé avec");
-    console.log(e);
+    console.log("la fonction submitFilterHandler a été appelé");
     setactive_filter((old) => {
       return {
         ...old,
@@ -169,13 +184,6 @@ const Home = () => {
         location: e.currentLocation,
       };
     });
-    console.log(
-      createRequest("get_query_val", "teeets", {
-        location: ["Test"],
-        language: "en",
-        time: { date1: "dr", date2: "ded" },
-      })
-    );
   };
   return (
     <React.Fragment>
