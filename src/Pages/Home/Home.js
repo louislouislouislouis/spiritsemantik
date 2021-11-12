@@ -139,7 +139,12 @@ const Home = () => {
       setisFocus(false);
     }
   };
+
   const submitHandler = async (e) => {
+    e.preventDefault();
+    navigate(`/${searchValue}/0`);
+  };
+  const onhoverhandler = async (e) => {
     e.preventDefault();
     navigate(`/${searchValue}/0`);
   };
@@ -184,6 +189,7 @@ const Home = () => {
                           result={preview.val.isValueOf.value.substring(28)}
                           type="Saint"
                           isSelected={preview.isSelected}
+                          onHover={onhoverhandler}
                         />
                       );
                     })}
