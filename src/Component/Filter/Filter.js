@@ -14,8 +14,8 @@ const Range = createSliderWithTooltip(Slider.Range);
 const Filter = (props) => {
   const [language, setLanguage] = useState("en");
   const [isFilter, setisFilter] = useState(false);
-
   const [birthDateRange, setbirthDateRange] = useState([100, 1500]);
+  const [location, setLocation] = useState(["Paris", "Marseille", "Dresde"]);
 
   const languageHandler = (e) => {
     setLanguage(e.target.value);
@@ -37,6 +37,7 @@ const Filter = (props) => {
       currentLanguage: language,
       currentBirthDateRange: birthDateRange,
     });
+    setLocation((old) => [...old, "test"]);
   };
   console.log(birthDateRange);
   return (
@@ -70,11 +71,25 @@ const Filter = (props) => {
           defaultValue={[100, 1500]}
           dots={true}
           onChange={birthDateHandler}
+          tipFormatter={(value) =>
+            `${value < 0 ? `${-value}bc` : `${value}ac`}`
+          }
+          marks={{
+            [-100]: `${"-100 av jc"}`,
+            [2000]: `${"10000 av jc"}`,
+          }}
+          tipProps={{
+            placement: "top",
+            visible: true,
+          }}
         />
       </div>
       <div className={`submitButton ${isFilter ? "visible" : "hidden"}`}>
         <button onClick={submitHandler}>Submit</button>
       </div>
+      {location.map((loc) => {
+        return <div>{loc}</div>;
+      })}
     </React.Fragment>
   );
 };
