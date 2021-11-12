@@ -185,7 +185,7 @@ const Home = () => {
       <div className="lastPlane">
         <img className="img_secondary_pane" src={wallet} alt="background" />
       </div>
-      <Filter onSubmitFilteree={submitFilterHandler} />
+      <Filter onSubmitFilter={submitFilterHandler} />
       <div className="mainPage">
         <div className={`mainPlane ${isFocus ? "plane_focus" : ""}`}>
           <div
