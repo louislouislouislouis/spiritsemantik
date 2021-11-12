@@ -30,7 +30,7 @@ const Home = () => {
     preview: [],
   });
   const [language, setLanguage] = useState("en");
-  const [birthDateRange, setbirthDateRange] = useState([100,1500]);
+  const [birthDateRange, setbirthDateRange] = useState([100, 1500]);
 
   //URL Navigation
   const navigate = useNavigate();
@@ -151,7 +151,10 @@ const Home = () => {
     e.preventDefault();
     navigate(`/${searchValue}/0`);
   };
-
+  const submitFilterHandler = (e) => {
+    console.log("la fonction submitFilterHandler a été appelé avec");
+    console.log(e);
+  };
   return (
     <React.Fragment>
       <div className="firstPlane">
@@ -160,7 +163,7 @@ const Home = () => {
       <div className="lastPlane">
         <img className="img_secondary_pane" src={wallet} alt="background" />
       </div>
-      <Filter language={language} birthDateRange={birthDateRange} />
+      <Filter onSubmitFilter={submitFilterHandler} />
       <div className="mainPage">
         <div className={`mainPlane ${isFocus ? "plane_focus" : ""}`}>
           <div
