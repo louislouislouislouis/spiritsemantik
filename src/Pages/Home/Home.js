@@ -32,7 +32,7 @@ const Home = () => {
 
   const [active_filter, setactive_filter] = useState({
     language: "en",
-    birthDateRange: [100, 1500],
+    birthDateRange: [-100, 2000],
     location: null,
   });
 
@@ -164,6 +164,7 @@ const Home = () => {
         ...old,
         language: e.currentLanguage,
         birthDateRange: e.currentBirthDateRange,
+        location: e.currentLocation
       };
     });
   };
