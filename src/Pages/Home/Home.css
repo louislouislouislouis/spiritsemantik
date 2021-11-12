@@ -122,6 +122,16 @@
   padding-left: 10px;
   margin-bottom: 8px;
 }
+
+.hidden{
+  display: none;
+}
+
+.filter{
+  background-color: blue;
+  width: 250px;
+}
+
 @keyframes float {
   0% {
     transform: translatey(0px);

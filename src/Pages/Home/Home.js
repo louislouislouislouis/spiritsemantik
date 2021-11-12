@@ -18,6 +18,7 @@ import chercher from "../../Assets/img/chercher.png";
 
 //Requests
 import requests from "../../Assets/json/request.json";
+import Filter from "../../Component/Filter/Filter";
 
 const Home = () => {
   //State Var
@@ -28,6 +29,8 @@ const Home = () => {
     suggestions: [],
     preview: [],
   });
+  const [language, setLanguage] = useState("en");
+  const [birthDateRange, setbirthDateRange] = useState([100,1500]);
 
   //URL Navigation
   const navigate = useNavigate();
@@ -149,6 +152,7 @@ const Home = () => {
       <div className="lastPlane">
         <img className="img_secondary_pane" src={wallet} alt="background" />
       </div>
+      <Filter language={language} birthDateRange={birthDateRange} />
       <div className="mainPage">
         <div className={`mainPlane ${isFocus ? "plane_focus" : ""}`}>
           <div
