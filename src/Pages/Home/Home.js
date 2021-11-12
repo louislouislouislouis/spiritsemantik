@@ -20,7 +20,7 @@ import chercher from "../../Assets/img/chercher.png";
 
 //Requests
 import requests from "../../Assets/json/request.json";
-import fullreq from "../../Assets/request/full_req.js";
+import { createRequest } from "../../Assets/request/request_creator";
 
 const Home = () => {
   //State Var
@@ -166,13 +166,17 @@ const Home = () => {
         ...old,
         language: e.currentLanguage,
         birthDateRange: e.currentBirthDateRange,
-        location: e.currentLocation
+        location: e.currentLocation,
       };
     });
-    console.log(fullreq);
+    console.log(
+      createRequest("get_query_val", "teeets", {
+        location: ["Test"],
+        language: "en",
+        time: { date1: "dr", date2: "ded" },
+      })
+    );
   };
-
-  console.log(active_filter);
   return (
     <React.Fragment>
       <div className="firstPlane">

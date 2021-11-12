@@ -31,7 +31,10 @@ const Filter = (props) => {
   };
 
   const locationHandler = (e) => {
-    setLocation((old) => [...old,document.getElementById("input_location").value]);
+    setLocation((old) => [
+      ...old,
+      document.getElementById("input_location").value,
+    ]);
   };
 
   const submitHandler = (e) => {
@@ -40,11 +43,9 @@ const Filter = (props) => {
     props.onSubmitFilteree({
       currentLanguage: language,
       currentBirthDateRange: birthDateRange,
-      currentLocation: location
+      currentLocation: location,
     });
-
   };
-  console.log(birthDateRange);
   return (
     <React.Fragment>
       <div className="filterButton">
@@ -88,13 +89,18 @@ const Filter = (props) => {
             visible: true,
           }}
         />
-      <br/>
-      <br/>
+        <br />
+        <br />
       </div>
       <div className={`filter ${isFilter ? "visible" : "hidden"}`}>
         <label htmlFor="selectLocation">Select Location: </label>
-        <input type="text" id="input_location" name="location" placeholder="Location" />
-        <button onClick={locationHandler} >Add</button>
+        <input
+          type="text"
+          id="input_location"
+          name="location"
+          placeholder="Location"
+        />
+        <button onClick={locationHandler}>Add</button>
       </div>
       <div className={`submitButton ${isFilter ? "visible" : "hidden"}`}>
         <button onClick={submitHandler}>Submit</button>
