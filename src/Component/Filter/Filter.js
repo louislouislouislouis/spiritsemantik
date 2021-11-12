@@ -31,7 +31,10 @@ const Filter = (props) => {
   };
 
   const locationHandler = (e) => {
-    setLocation((old) => [...old,document.getElementById("input_location").value]);
+    let newLocation = document.getElementById("input_location").value;
+    if(!location.includes(newLocation)){
+      setLocation((old) => [...old, newLocation]);
+    }
   };
 
   const submitHandler = (e) => {
