@@ -1,10 +1,6 @@
 //React Necessities
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  BrowserRouter as Router,
-  useLocation,
-  useHistory,
-} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 //Custom Component
 import LineResult from "../../Component/LineResult/LineResult";
@@ -51,14 +47,8 @@ const Home = () => {
   useEffect(() => {
     const requestHandler = async () => {
       console.log("A request has been sent");
-      const contenu_requete = requests.prefix + requests.base_request;
-      const full_req = contenu_requete
-        .replace("$$$BASE_VAL_LOWER$$$", searchValue.toLowerCase())
-        .replace(
-          "$$$BASE_VAL_UPPER$$$",
-          searchValue.charAt(0).toUpperCase() + searchValue.slice(1)
-        );
 
+      const full_req = createRequest("get_autocomplete", searchValue);
       const url =
         "http://dbpedia.org/sparql?query=" +
         encodeURIComponent(full_req) +

@@ -86,7 +86,13 @@ const SearchResult = (props) => {
   }, [params.qid]);
 
   const onClickAction = (e) => {
-    history.push(`/${params.qid}/${e}`);
+    const filter = JSON.parse(
+      new URLSearchParams(history.location.search).get("f")
+    );
+    history.push({
+      pathname: `/${params.qid}/${e}`,
+      search: `f=${encodeURIComponent(JSON.stringify(filter))}`,
+    });
   };
   return (
     <React.Fragment>

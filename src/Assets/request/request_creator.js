@@ -1,14 +1,17 @@
-import fullreq from "./base_query_val";
+import fullreq from "./shearch_req/base_query_val";
 import location_filter from "./filter/location";
 import language_filter from "./filter/language";
 import date_filter from "./filter/date";
+import autocompleterequest from "./autocomplete/autocomplete";
+
 const createRequest = (type, query_val, option = {}) => {
   if (!query_val) {
-    throw "Bad qery";
+    throw "Bad query";
   }
+  let return_val;
   switch (type) {
     case "get_query_val":
-      let return_val = fullreq;
+      return_val = fullreq;
       //replace query value
       return_val = return_val.replaceAll("$$$QUERY_VAL$$$", query_val);
 
@@ -52,8 +55,19 @@ const createRequest = (type, query_val, option = {}) => {
       } else {
         return_val = return_val.replaceAll("$$$FILTER_VAL_DATE$$$", "");
       }
+      return return_val;
+
+    case "get_autocomplete":
+      return_val = autocompleterequest;
+      //replace query value (Case sensitive )
+      let query_val_1 = query_val.toLowerCase();
+      let query_val_2 = query_val.charAt(0).toUpperCase() + query_val.slice(1);
+
+      return_val = return_val.replaceAll("$$$BASE_VAL_LOWER$$$", query_val_1);
+      return_val = return_val.replaceAll("$$$BASE_VAL_UPPER$$$", query_val_2);
 
       return return_val;
+
     default:
       throw "Bad type";
   }

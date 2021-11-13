@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import CardResult from "../../Component/CardsResult/CardResult";
 import "./Wiki.css";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 import { useHttpClient } from "../../Hooks/http-hook";
 import requests from "../../Assets/json/request.json";
 
 const Wiki = () => {
   const location = useLocation();
+  const history = useHistory();
   //hhtp
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   //url
@@ -75,17 +76,20 @@ const Wiki = () => {
   }, [results]);
 
   const onClickAction = (e) => {
-    console.log("ee");
-    //navigate(`/${params.qid}/${e}`);
+    history.push(`/${params.qid}/${e}`);
   };
   const quithandler = (e) => {
     console.log("ee");
     if (e.currentTarget === e.target) {
-      //navigate(`/${params.qid}/0`);
+      const filter = JSON.parse(
+        new URLSearchParams(history.location.search).get("f")
+      );
+      history.push({
+        pathname: `/${params.qid}/0`,
+        search: `f=${encodeURIComponent(JSON.stringify(filter))}`,
+      });
     }
   };
-
-  console.log(related);
   return (
     <div className="wiki" onClick={quithandler}>
       <div className="big_card">
