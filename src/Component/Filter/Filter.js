@@ -8,6 +8,7 @@ import "rc-slider/assets/index.css";
 //assets
 import bg from "../../Assets/svg/bg4.svg";
 import arrow from "../../Assets/img/down-arrow.png";
+
 //Styles
 import "./Filter.css";
 

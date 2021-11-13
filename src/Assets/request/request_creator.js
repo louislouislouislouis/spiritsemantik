@@ -3,6 +3,7 @@ import location_filter from "./filter/location";
 import language_filter from "./filter/language";
 import date_filter from "./filter/date";
 import autocompleterequest from "./autocomplete/autocomplete";
+import detail_req from "./details__req/detail";
 
 const createRequest = (type, query_val, option = {}) => {
   if (!query_val) {
@@ -66,6 +67,17 @@ const createRequest = (type, query_val, option = {}) => {
       return_val = return_val.replaceAll("$$$BASE_VAL_LOWER$$$", query_val_1);
       return_val = return_val.replaceAll("$$$BASE_VAL_UPPER$$$", query_val_2);
 
+      return return_val;
+
+    case "get_details_info":
+      return_val = detail_req;
+      //replace query value (Case sensitive )
+      if (option.language) {
+        return_val = return_val.replaceAll("$$$LANGUAGE$$$", option.language);
+      } else {
+        return_val = return_val.replaceAll("$$$FILTER_VAL_LANGUAGE$$$", "en");
+      }
+      return_val = return_val.replaceAll("$$$BASE_VAL$$$", query_val);
       return return_val;
 
     default:

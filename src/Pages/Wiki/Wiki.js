@@ -1,35 +1,64 @@
+//React Necessities
 import React, { useEffect, useState } from "react";
-import CardResult from "../../Component/CardsResult/CardResult";
-import "./Wiki.css";
 import { useParams, useHistory, useLocation } from "react-router-dom";
+
+//Custom Components
+import CardResult from "../../Component/CardsResult/CardResult";
+
+//Custom Hooks
 import { useHttpClient } from "../../Hooks/http-hook";
-import requests from "../../Assets/json/request.json";
+
+//Request Creator
+import { createRequest } from "../../Assets/request/request_creator";
+
+//Styles
+import "./Wiki.css";
 
 const Wiki = () => {
+  //Url logic
   const location = useLocation();
   const history = useHistory();
-  //hhtp
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
-  //url
   const params = useParams();
+
+  //custome http Hooks
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+  //State var
   const [results, setresults] = useState({});
   const [related, setrelated] = useState([]);
+
   //new request every time url change
   useEffect(() => {
     const requestHandler = async () => {
-      setrelated([]);
       console.log("A request has been sent based onurl");
-      const contenu_requete = requests.detail_request;
-      const full_req = contenu_requete.replaceAll(
-        "$$$BASE_VAL$$$",
-        "http://dbpedia.org/resource/" + params.uid
+      setrelated([]);
+      const filter = JSON.parse(
+        new URLSearchParams(history.location.search).get("f")
       );
-      console.log(full_req);
+      const full_req = createRequest(
+        "get_details_info",
+        "http://dbpedia.org/resource/" + params.uid,
+        {
+          ...(filter.location && { location: filter.location }),
+          ...(filter.language && { language: filter.language }),
+          ...(filter.birthDateRange && {
+            time: {
+              date1:
+                filter.birthDateRange[0] < 100
+                  ? "0001-01-01"
+                  : filter.birthDateRange[0].toString() + "-01-01",
+              date2:
+                filter.birthDateRange[1] < 100
+                  ? "0001-01-01"
+                  : filter.birthDateRange[1].toString() + "-01-01",
+            },
+          }),
+        }
+      );
       const url =
         "http://dbpedia.org/sparql?query=" +
         encodeURIComponent(full_req) +
         "&format=json";
-
       try {
         const rep = await sendRequest(url);
         console.log(rep.results.bindings[0]);
@@ -41,6 +70,7 @@ const Wiki = () => {
     requestHandler();
   }, [location]);
 
+  //Request to get related
   useEffect(() => {
     const requestHandler = async () => {
       console.log("A request has been sent base on first req");
@@ -50,10 +80,28 @@ const Wiki = () => {
         for (let index = 0; index < seeAlso.length; index++) {
           const element = seeAlso[index];
           if (index < 5) {
-            const contenu_requete = requests.detail_request;
-            const full_req = contenu_requete.replaceAll(
-              "$$$BASE_VAL$$$",
-              "http://dbpedia.org/resource/" + element.substring(28)
+            const filter = JSON.parse(
+              new URLSearchParams(history.location.search).get("f")
+            );
+            const full_req = createRequest(
+              "get_details_info",
+              "http://dbpedia.org/resource/" + params.uid,
+              {
+                ...(filter.location && { location: filter.location }),
+                ...(filter.language && { language: filter.language }),
+                ...(filter.birthDateRange && {
+                  time: {
+                    date1:
+                      filter.birthDateRange[0] < 100
+                        ? "0001-01-01"
+                        : filter.birthDateRange[0].toString() + "-01-01",
+                    date2:
+                      filter.birthDateRange[1] < 100
+                        ? "0001-01-01"
+                        : filter.birthDateRange[1].toString() + "-01-01",
+                  },
+                }),
+              }
             );
             const url =
               "http://dbpedia.org/sparql?query=" +
@@ -75,9 +123,18 @@ const Wiki = () => {
     requestHandler();
   }, [results]);
 
+  //Navigate with see Also
   const onClickAction = (e) => {
-    history.push(`/${params.qid}/${e}`);
+    const filter = JSON.parse(
+      new URLSearchParams(history.location.search).get("f")
+    );
+    history.push({
+      pathname: `/${params.qid}/${e}`,
+      search: `f=${encodeURIComponent(JSON.stringify(filter))}`,
+    });
   };
+
+  //return to search page
   const quithandler = (e) => {
     console.log("ee");
     if (e.currentTarget === e.target) {
@@ -90,6 +147,7 @@ const Wiki = () => {
       });
     }
   };
+
   return (
     <div className="wiki" onClick={quithandler}>
       <div className="big_card">

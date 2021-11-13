@@ -19,7 +19,6 @@ import wallet from "../../Assets/img/wallet.png";
 import chercher from "../../Assets/img/chercher.png";
 
 //Requests
-import requests from "../../Assets/json/request.json";
 import { createRequest } from "../../Assets/request/request_creator";
 
 const Home = () => {

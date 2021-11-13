@@ -1,7 +1,7 @@
 //React Necessities
 import React, { useEffect, useState } from "react";
-
 import { useHistory, useParams } from "react-router-dom";
+
 //Custom Hooks
 import { useHttpClient } from "../../Hooks/http-hook";
 
@@ -13,7 +13,6 @@ import Wiki from "../Wiki/Wiki";
 import "./SearchResult.css";
 
 //Requests
-import requests from "../../Assets/json/request.json";
 import { createRequest } from "../../Assets/request/request_creator";
 
 const SearchResult = (props) => {
@@ -35,13 +34,6 @@ const SearchResult = (props) => {
     console.log(filter);
     const requestHandler = async () => {
       console.log("A request has been sent");
-      const contenu_requete = requests.prefix + requests.desc_request;
-      const full_req = contenu_requete
-        .replace("$$$BASE_VAL_LOWER$$$", params.qid.toLowerCase())
-        .replace(
-          "$$$BASE_VAL_UPPER$$$",
-          params.qid.charAt(0).toUpperCase() + params.qid.slice(1)
-        );
 
       //create request with filter on url
       const filter = JSON.parse(
