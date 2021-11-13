@@ -56,9 +56,14 @@ const Filter = (props) => {
     console.log(
       "Schauen Sie sich dieses Beispiel an und verwenden Sie die Funktion, die wir in locationHandler verwenden, um es zu vermischen"
     );
-
+    if(location.includes(e.target.value)) {
+      setLocation(location.filter((lieu) => lieu !== e.target.value));
+    }
+   //
     //https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array
   };
+
+  useEffect(() => {console.log("location mit useEffect: ");},[location]);
 
   const submitHandler = (e) => {
     console.log("submitted");
