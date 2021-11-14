@@ -56,3 +56,7 @@
 .filterhidden {
   transform: translateX(-220px);
 }
+.filtercontainer {
+  display: flex;
+  flex-wrap: wrap;
+}

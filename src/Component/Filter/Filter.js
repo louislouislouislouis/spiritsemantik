@@ -11,6 +11,7 @@ import arrow from "../../Assets/img/down-arrow.png";
 
 //Styles
 import "./Filter.css";
+import LocationButton from "../LocationButton/LocationButton";
 
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Range = createSliderWithTooltip(Slider.Range);
@@ -56,14 +57,16 @@ const Filter = (props) => {
     console.log(
       "Schauen Sie sich dieses Beispiel an und verwenden Sie die Funktion, die wir in locationHandler verwenden, um es zu vermischen"
     );
-    if(location.includes(e.target.value)) {
+    if (location.includes(e.target.value)) {
       setLocation(location.filter((lieu) => lieu !== e.target.value));
     }
-   //
+    //
     //https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array
   };
 
-  useEffect(() => {console.log("location mit useEffect: ");},[location]);
+  useEffect(() => {
+    console.log("location mit useEffect: ");
+  }, [location]);
 
   const submitHandler = (e) => {
     console.log("submitted");
@@ -129,15 +132,17 @@ const Filter = (props) => {
             />
             <button onClick={locationHandler}>Add</button>
           </div>
-          {location.map((loc) => {
-            return (
-              <div className={`filter`}>
-                <button onClick={handleLocationDisable} value={loc}>
-                  {loc} X
-                </button>
-              </div>
-            );
-          })}
+          <div className="filtercontainer">
+            {location.map((loc) => {
+              return (
+                <div className={`filter`}>
+                  <button onClick={handleLocationDisable} value={loc}>
+                    {loc} X
+                  </button>
+                </div>
+              );
+            })}
+          </div>
           <div className={`submitButton`}>
             <button onClick={submitHandler}>Submit</button>
           </div>
