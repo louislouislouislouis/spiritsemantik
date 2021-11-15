@@ -5,9 +5,9 @@
   position: fixed;
   z-index: 2;
   height: 100vh;
-  width: 250px;
+  width: 450px;
   transition: all 0.4s cubic-bezier(0.86, 0.01, 0.27, 0.99);
-/*  filter: drop-shadow(0px 100px 80px rgba(0, 0, 0, 0.07))
+  /*  filter: drop-shadow(0px 100px 80px rgba(0, 0, 0, 0.07))
     drop-shadow(0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0503198))
     drop-shadow(0px 22.3363px 17.869px rgba(0, 0, 0, 0.0417275))
     drop-shadow(0px 12.5216px 10.0172px rgba(0, 0, 0, 0.035))
@@ -19,6 +19,9 @@
 .filterdiv .filtercontent {
   width: 85%;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .filterdiv .filter_bg {
   position: absolute;
@@ -55,9 +58,96 @@
   transform: translateX(0px);
 }
 .filterhidden {
-  transform: translateX(-220px);
+  transform: translateX(-420px);
 }
 .filtercontainer {
   display: flex;
   flex-wrap: wrap;
+}
+.filtercontent .title {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 28px;
+
+  color: rgba(0, 0, 0, 0.7);
+  margin: 40px;
+}
+.filtercontent .separator {
+  width: 80%;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.4);
+}
+.filtercontent .option {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+.filtercontent .option select {
+  border: 0px;
+  position: relative;
+  z-index: 19999;
+  width: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.filtercontent .option label {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+
+  color: rgba(0, 0, 0, 0.4);
+  margin: 16px;
+}
+.filtercontent input {
+  border-radius: 16px;
+  background-color: #ffffff;
+  height: 50px;
+  width: 90%;
+  transform: translateX(-50%);
+  position: relative;
+  left: 50%;
+  box-shadow: 0px 2.76726px 2.21381px rgba(0, 0, 0, 0.0196802);
+}
+.submitButton {
+  position: absolute;
+  bottom: 40px;
+  display: flex;
+}
+.ButtonDiv {
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  width: 95px;
+  height: 33px;
+  margin: 5px;
+}
+.b2 {
+  background: #51a0f7;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 21px;
+  /* identical to box height */
+}
+.b1 {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 21px;
+  /* identical to box height */
+
+  background: rgba(81, 160, 247, 0.31);
+  color: #51a0f7;
+}
+select:focus {
+  outline: none;
 }
