@@ -10,7 +10,7 @@ WHERE {
 	dbo:birthPlace ?birthPlace;
 	dbo:deathPlace ?deathPlace.
  	OPTIONAL { ?lien dbo:thumbnail ?pic. }
- 	FILTER regex(str(?lien ), "$$$QUERY_VAL$$$").
+    FILTER (regex(str(?label ), \"$$$BASE_VAL_LOWER$$$\") || regex(str(?label), \"$$$BASE_VAL_UPPER$$$\")) . 
     $$$FILTER_VAL_LANGUAGE$$$
     $$$FILTER_VAL_DATE$$$
     $$$FILTER_VAL_LOCATION$$$
