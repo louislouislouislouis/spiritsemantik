@@ -1,5 +1,5 @@
 const fullreq = `
-SELECT ?lien ?label ?desc ?pic ?birthYear ?deathYear ?birthPlace ?deathPlace
+SELECT ?lien ?label ?desc ?pic 
 WHERE {
  	?lien a <http://dbpedia.org/ontology/Saint>;
     a dbo:Person;
@@ -15,6 +15,9 @@ WHERE {
     $$$FILTER_VAL_DATE$$$
     $$$FILTER_VAL_LOCATION$$$
 }
-GROUP BY ?label`;
+GROUP BY ?label
+LIMIT 20`;
+
+// cela crée les doublons ?birthYear ?deathYear ?birthPlace ?deathPlace
 
 export default fullreq;

@@ -4,6 +4,7 @@ import language_filter from "./filter/language";
 import date_filter from "./filter/date";
 import autocompleterequest from "./autocomplete/autocomplete";
 import detail_req from "./details__req/detail";
+import location_filter_interior from "./filter/location_interior";
 
 const createRequest = (type, query_val, option = {}) => {
   if (!query_val) {
@@ -17,12 +18,25 @@ const createRequest = (type, query_val, option = {}) => {
       return_val = return_val.replaceAll("$$$QUERY_VAL$$$", query_val);
 
       //filter replaced if necessarie
-      if (option.location) {
+      if (option.hasOwnProperty("location") && option.location.length != 0) {
+        console.log(option.location)
         let loc_valu = location_filter;
-        loc_valu = loc_valu.replaceAll("$$$LOCATION$$$", option.location);
+        let loc_valu_interior = location_filter_interior;
+        let toreturn = "";
+        option.location.forEach( (loc, index) => {
+          if(index==0){
+            toreturn += loc_valu_interior.replaceAll("$$$LOCATION$$$", loc);
+          }else{
+            toreturn += "||"+loc_valu_interior.replaceAll("$$$LOCATION$$$", loc);
+          }
+        });
+        loc_valu = loc_valu.replaceAll(
+            "$$$LOCATION_INTERIOR$$$",
+            toreturn
+        );
         return_val = return_val.replaceAll(
           "$$$FILTER_VAL_LOCATION$$$",
-          loc_valu
+            loc_valu
         );
       } else {
         return_val = return_val.replaceAll("$$$FILTER_VAL_LOCATION$$$", "");
