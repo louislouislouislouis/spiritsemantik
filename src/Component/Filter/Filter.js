@@ -38,33 +38,16 @@ const Filter = (props) => {
 
   const locationHandler = (e) => {
     e.preventDefault();
-    console.log(e);
-    console.log(
-      "Diese Methode ist funktional für Javascript ohne React, aber Sie haben unglaubliche Werkzeuge! Versuchen Sie, etwas anderes zu finden..."
-    );
-    //eine helfende Hand
-    //https://fr.reactjs.org/docs/forms.html")
     if(!location.includes(currentLocation)){
       setLocation((old) => [...old, currentLocation]);
     }
     setCurrentLocation("");
-    //
   };
 
   const handleLocationDisable = (e,val) => {
-    console.log("Ich möchte das weg haben");
-    console.log(val);
-
-    //TODO remove e.target.value from location
-    console.log("Ich kenne die Antwort, aber ich lasse Sie arbeiten");
-    console.log(
-      "Schauen Sie sich dieses Beispiel an und verwenden Sie die Funktion, die wir in locationHandler verwenden, um es zu vermischen"
-    );
     if (location.includes(val)) {
       setLocation(location.filter((lieu) => lieu !== val));
     }
-    //
-    //https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array
   };
 
   useEffect(() => {
