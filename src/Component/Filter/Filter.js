@@ -38,8 +38,8 @@ const Filter = (props) => {
 
   const locationHandler = (e) => {
     e.preventDefault();
-    if(!location.includes(currentLocation)){
-      setLocation((old) => [...old, currentLocation]);
+    if(!location.includes(currentLocation.charAt(0).toUpperCase()+currentLocation.slice(1).toLowerCase())){
+      setLocation((old) => [...old, currentLocation.charAt(0).toUpperCase()+currentLocation.slice(1).toLowerCase()]);
     }
     setCurrentLocation("");
   };
