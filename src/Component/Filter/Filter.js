@@ -9,9 +9,11 @@ import "rc-slider/assets/index.css";
 import bg from "../../Assets/svg/bg4.svg";
 import arrow from "../../Assets/img/down-arrow.png";
 
+//Custom Component
+import LocationButton from "../LocationButton/LocationButton";
+
 //Styles
 import "./Filter.css";
-import LocationButton from "../LocationButton/LocationButton";
 
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Range = createSliderWithTooltip(Slider.Range);
@@ -21,6 +23,7 @@ const Filter = (props) => {
   const [isFilter, setisFilter] = useState(false);
   const [birthDateRange, setbirthDateRange] = useState([-100, 2000]);
   const [location, setLocation] = useState([]);
+  const [currentLocation, setCurrentLocation] = useState("");
 
   const languageHandler = (e) => {
     setLanguage(e.target.value);
@@ -36,32 +39,26 @@ const Filter = (props) => {
   };
 
   const locationHandler = (e) => {
-    console.log(
-      "Diese Methode ist funktional für Javascript ohne React, aber Sie haben unglaubliche Werkzeuge! Versuchen Sie, etwas anderes zu finden..."
-    );
-    //eine helfende Hand
-    //https://fr.reactjs.org/docs/forms.html")
-    setLocation((old) => [
-      ...old,
-      document.getElementById("input_location").value,
-    ]);
-    //
+    e.preventDefault();
+    if (
+      !location.includes(
+        currentLocation.charAt(0).toUpperCase() +
+          currentLocation.slice(1).toLowerCase()
+      )
+    ) {
+      setLocation((old) => [
+        ...old,
+        currentLocation.charAt(0).toUpperCase() +
+          currentLocation.slice(1).toLowerCase(),
+      ]);
+    }
+    setCurrentLocation("");
   };
 
-  const handleLocationDisable = (e) => {
-    console.log("Ich möchte das weg haben");
-    console.log(e.target.value);
-
-    //TODO remove e.target.value from location
-    console.log("Ich kenne die Antwort, aber ich lasse Sie arbeiten");
-    console.log(
-      "Schauen Sie sich dieses Beispiel an und verwenden Sie die Funktion, die wir in locationHandler verwenden, um es zu vermischen"
-    );
-    if (location.includes(e.target.value)) {
-      setLocation(location.filter((lieu) => lieu !== e.target.value));
+  const handleLocationDisable = (e, val) => {
+    if (location.includes(val)) {
+      setLocation(location.filter((lieu) => lieu !== val));
     }
-    //
-    //https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array
   };
 
   useEffect(() => {
@@ -77,39 +74,52 @@ const Filter = (props) => {
       currentLocation: location,
     });
   };
+  const resetandSubmitHandler = (e) => {
+    console.log("submitted");
+    setCurrentLocation("");
+    setLanguage("en");
+    setLocation([]);
+    setbirthDateRange([-100, 2000]);
+    props.onSubmitFilter({
+      currentLanguage: language,
+      currentBirthDateRange: birthDateRange,
+      currentLocation: location,
+    });
+  };
   return (
     <React.Fragment>
       <div
         className={`filterdiv ${isFilter ? "filtervisible" : "filterhidden"}`}
       >
         <div className="filtercontent">
-          <div className={`filter`}>
-            <label htmlFor="select-language">Select Language: </label>
-            <select
-              onChange={languageHandler}
-              name="language"
-              id="language"
-              value={language}
-            >
-              <option value="de">deutsch</option>
-              <option value="en">english</option>
-              <option value="es">español</option>
-              <option value="fr">français</option>
+          <div className="title">Filter</div>
+          <div className="separator"></div>
+          <div className="option">
+            <label>Language</label>
+            <select onChange={languageHandler} value={language}>
+              <option value="de">Deutsch</option>
+              <option value="en">English</option>
+              <option value="es">Español</option>
+              <option value="fr">Français</option>
             </select>
           </div>
-          <div className={`filter`}>
-            <label htmlFor="selectBirtDate">Select Birthdate: </label>
+          <div className="separator"></div>
+          <div className="option">
+            <label>Time:</label>
             <Range
+              style={{
+                marginTop: "50px",
+                marginBottom: "50px",
+                width: "90%",
+                left: "50%",
+                transform: "translateX(-50%)",
+              }}
               min={-100}
               max={2000}
-              step={100}
               allowCross={false}
-              defaultValue={[100, 1500]}
-              dots={true}
+              value={birthDateRange}
               onChange={birthDateHandler}
-              tipFormatter={(value) =>
-                `${value < 0 ? `${-value} b.C.` : `${value} a.C.`}`
-              }
+              tipFormatter={(value) => `${value}`}
               marks={{
                 [-100]: `${"100 b.C."}`,
                 [2000]: `${"2000 a.C."}`,
@@ -119,32 +129,40 @@ const Filter = (props) => {
                 visible: true,
               }}
             />
-            <br />
-            <br />
           </div>
-          <div className={`filter `}>
-            <label htmlFor="selectLocation">Select Location: </label>
-            <input
-              type="text"
-              id="input_location"
-              name="location"
-              placeholder="Location"
-            />
-            <button onClick={locationHandler}>Add</button>
-          </div>
-          <div className="filtercontainer">
-            {location.map((loc) => {
-              return (
-                <div className={`filter`}>
-                  <button onClick={handleLocationDisable} value={loc}>
-                    {loc} X
-                  </button>
-                </div>
-              );
-            })}
+          <div className="separator"></div>
+          <div className="option">
+            <label>Select Location: </label>
+            <form onSubmit={locationHandler}>
+              <input
+                type="text"
+                id="input_location"
+                name="location"
+                placeholder="Location"
+                value={currentLocation}
+                onChange={(e) => {
+                  setCurrentLocation(e.target.value);
+                }}
+              />
+            </form>
+            <div className="filtercontainer">
+              {location.map((loc) => {
+                return (
+                  <LocationButton
+                    location={loc}
+                    onDeleteAction={(e) => handleLocationDisable(e, loc)}
+                  />
+                );
+              })}
+            </div>
           </div>
           <div className={`submitButton`}>
-            <button onClick={submitHandler}>Submit</button>
+            <div className="ButtonDiv b1" onClick={resetandSubmitHandler}>
+              Reset
+            </div>
+            <div className="ButtonDiv b2" onClick={submitHandler}>
+              Submit
+            </div>
           </div>
         </div>
         <div className="filterButton">

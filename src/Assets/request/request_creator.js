@@ -14,8 +14,13 @@ const createRequest = (type, query_val, option = {}) => {
   switch (type) {
     case "get_query_val":
       return_val = fullreq;
+      let query_val_3 = query_val.toLowerCase();
+      let query_val_4 = query_val.charAt(0).toUpperCase() + query_val.slice(1);
+
+      return_val = return_val.replaceAll("$$$BASE_VAL_LOWER$$$", query_val_3);
+      return_val = return_val.replaceAll("$$$BASE_VAL_UPPER$$$", query_val_4);
       //replace query value
-      return_val = return_val.replaceAll("$$$QUERY_VAL$$$", query_val);
+      //return_val = return_val.replaceAll("$$$QUERY_VAL$$$", query_val);
 
       //filter replaced if necessarie
       if (option.hasOwnProperty("location") && option.location.length != 0) {
