@@ -14,6 +14,7 @@ import "./SearchResult.css";
 
 //Requests
 import { createRequest } from "../../Assets/request/request_creator";
+import LoadingCard from "../../Component/LoadinCard/LoadingCard";
 
 const SearchResult = (props) => {
   const [results, setresults] = useState([]);
@@ -28,6 +29,7 @@ const SearchResult = (props) => {
   const history = useHistory();
   //new request every time url change
   useEffect(() => {
+    setresults([]);
     const filter = JSON.parse(
       new URLSearchParams(history.location.search).get("f")
     );
@@ -39,22 +41,26 @@ const SearchResult = (props) => {
       const filter = JSON.parse(
         new URLSearchParams(history.location.search).get("f")
       );
-      const req = createRequest("get_query_val", params.qid, {
-        ...(filter.location && { location: filter.location }),
-        ...(filter.language && { language: filter.language }),
-        ...(filter.birthDateRange && {
-          time: {
-            date1:
-              filter.birthDateRange[0] < 100
-                ? "0001-01-01"
-                : filter.birthDateRange[0].toString() + "-01-01",
-            date2:
-              filter.birthDateRange[1] < 100
-                ? "0001-01-01"
-                : filter.birthDateRange[1].toString() + "-01-01",
-          },
-        }),
-      });
+      const req = createRequest(
+        "get_query_val",
+        params.qid === "0" ? "" : params.qid,
+        {
+          ...(filter.location && { location: filter.location }),
+          ...(filter.language && { language: filter.language }),
+          ...(filter.birthDateRange && {
+            time: {
+              date1:
+                filter.birthDateRange[0] < 100
+                  ? "0001-01-01"
+                  : filter.birthDateRange[0].toString() + "-01-01",
+              date2:
+                filter.birthDateRange[1] < 100
+                  ? "0001-01-01"
+                  : filter.birthDateRange[1].toString() + "-01-01",
+            },
+          }),
+        }
+      );
 
       const url =
         "http://dbpedia.org/sparql?query=" +
@@ -63,13 +69,14 @@ const SearchResult = (props) => {
       console.log(req);
       try {
         const rep = await sendRequest(url);
+
         console.log(rep);
         setresults(rep.results.bindings);
-        console.log("rerr");
         window.scrollTo({
           top: 600,
           behavior: "smooth",
         });
+        console.log("rerr");
       } catch (error) {
         console.log(error);
       }
@@ -89,6 +96,7 @@ const SearchResult = (props) => {
   return (
     <React.Fragment>
       <div className="results_cards">
+        {isLoading && <LoadingCard />}
         {results.map((el) => {
           return (
             <div className="ext_container">
@@ -105,6 +113,15 @@ const SearchResult = (props) => {
             </div>
           );
         })}
+        {results.length === 0 && (
+          <CardResult
+            title={"No result"}
+            img={
+              "https://static.cnews.fr/sites/default/files/styles/image_640_360/public/point1.jpg?itok=jGTH8XuS"
+            }
+            onClickAction={() => {}}
+          />
+        )}
       </div>
       {params.uid !== "0" && <Wiki url={params.uid} />}
     </React.Fragment>

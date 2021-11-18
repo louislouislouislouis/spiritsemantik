@@ -42,6 +42,7 @@
   background-color: white;
   display: flex;
   flex-direction: column;
+  padding-bottom: 50px;
   align-items: center;
 }
 .wiki .big_card .content .see_also {
@@ -76,4 +77,11 @@
   display: grid;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+}
+.wiki .bio {
+  width: 100%;
+}
+.wiki .bio a {
+  color: black;
+  text-decoration: none;
 }

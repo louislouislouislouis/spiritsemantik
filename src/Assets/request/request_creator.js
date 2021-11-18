@@ -4,9 +4,22 @@ import language_filter from "./filter/language";
 import date_filter from "./filter/date";
 import autocompleterequest from "./autocomplete/autocomplete";
 import detail_req from "./details__req/detail";
+import thumbnail_req from "./details__req/thumbnail_req";
+import abstract_req from "./details__req/abstract_req";
+import seeAlso_req from "./details__req/seeAlso_req";
+import birthDate_req from "./details__req/birthDate_req";
+import label_req from "./details__req/label_req";
+import birthName_req from "./details__req/birthName_req";
+import birthPlace_req from "./details__req/birthPlace_req";
+import deathDate_req from "./details__req/deathDate_req";
+import deathPlace_req from "./details__req/deathPlace_req";
+import feastDay_req from "./details__req/feastDay_req";
+import veneratedIn_req from "./details__req/veneratedIn_req";
+import successor_req from "./details__req/successor_req";
 
 const createRequest = (type, query_val, option = {}) => {
-  if (!query_val) {
+  if (query_val === "") {
+  } else if (!query_val) {
     throw "Bad query";
   }
   let return_val;
@@ -22,9 +35,22 @@ const createRequest = (type, query_val, option = {}) => {
       //return_val = return_val.replaceAll("$$$QUERY_VAL$$$", query_val);
 
       //filter replaced if necessarie
-      if (option.location) {
+      if (option.location && option.location.length > 0) {
         let loc_valu = location_filter;
-        loc_valu = loc_valu.replaceAll("$$$LOCATION$$$", option.location);
+        console.log(option.location);
+        let cond = "";
+        option.location.forEach((element, index) => {
+          if (index === 0) {
+            cond = `regex(str(?birthPlace), "${element}")|| regex(str(?deathPlace), "${element}")`;
+          } else {
+            cond =
+              cond +
+              ` || ` +
+              ` regex(str(?birthPlace), "${element}")|| regex(str(?deathPlace), "${element}")`;
+          }
+        });
+        loc_valu = loc_valu.replaceAll("$$$LOCATION_REG$$$", cond);
+
         return_val = return_val.replaceAll(
           "$$$FILTER_VAL_LOCATION$$$",
           loc_valu
@@ -82,6 +108,70 @@ const createRequest = (type, query_val, option = {}) => {
       } else {
         return_val = return_val.replaceAll("$$$FILTER_VAL_LANGUAGE$$$", "en");
       }
+      return_val = return_val.replaceAll("$$$BASE_VAL$$$", query_val);
+      return return_val;
+    case "get_thumbnail":
+      return_val = thumbnail_req;
+      return_val = return_val.replaceAll("$$$BASE_VAL$$$", query_val);
+      return return_val;
+    case "get_abstract":
+      return_val = abstract_req;
+      return_val = return_val.replaceAll("$$$BASE_VAL$$$", query_val);
+      return_val = return_val.replaceAll(
+        "$$$LANGUAGE$$$",
+        option.language || "en"
+      );
+      return return_val;
+    case "get_seeAlso":
+      return_val = seeAlso_req;
+      return_val = return_val.replaceAll("$$$BASE_VAL$$$", query_val);
+      return_val = return_val.replaceAll(
+        "$$$LANGUAGE$$$",
+        option.language || "en"
+      );
+      return return_val;
+    case "get_birthDate":
+      return_val = birthDate_req;
+      return_val = return_val.replaceAll("$$$BASE_VAL$$$", query_val);
+      return return_val;
+    case "get_label":
+      return_val = label_req;
+      return_val = return_val.replaceAll(
+        "$$$LANGUAGE$$$",
+        option.language || "en"
+      );
+      return_val = return_val.replaceAll("$$$BASE_VAL$$$", query_val);
+      return return_val;
+    case "getBirthName":
+      return_val = birthName_req;
+      return_val = return_val.replaceAll(
+        "$$$LANGUAGE$$$",
+        option.language || "en"
+      );
+      return_val = return_val.replaceAll("$$$BASE_VAL$$$", query_val);
+      return return_val;
+    case "getBirthPlace":
+      return_val = birthPlace_req;
+      return_val = return_val.replaceAll("$$$BASE_VAL$$$", query_val);
+      return return_val;
+    case "getdeathDate":
+      return_val = deathDate_req;
+      return_val = return_val.replaceAll("$$$BASE_VAL$$$", query_val);
+      return return_val;
+    case "getdeathPlace":
+      return_val = deathPlace_req;
+      return_val = return_val.replaceAll("$$$BASE_VAL$$$", query_val);
+      return return_val;
+    case "getfeast":
+      return_val = feastDay_req;
+      return_val = return_val.replaceAll("$$$BASE_VAL$$$", query_val);
+      return return_val;
+    case "getsuccessor":
+      return_val = successor_req;
+      return_val = return_val.replaceAll("$$$BASE_VAL$$$", query_val);
+      return return_val;
+    case "getveneratedin":
+      return_val = veneratedIn_req;
       return_val = return_val.replaceAll("$$$BASE_VAL$$$", query_val);
       return return_val;
 
