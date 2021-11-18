@@ -15,7 +15,7 @@ WHERE {
     $$$FILTER_VAL_DATE$$$
     $$$FILTER_VAL_LOCATION$$$
 }
-GROUP BY ?label
+GROUP BY ?lien
 LIMIT 20`;
 
 // cela crée les doublons ?birthYear ?deathYear ?birthPlace ?deathPlace
