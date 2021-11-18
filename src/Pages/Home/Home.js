@@ -145,7 +145,7 @@ const Home = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     history.push({
-      pathname: `/${searchValue}/0`,
+      pathname: `/${searchValue || "0"}/0`,
       search: `f=${encodeURIComponent(JSON.stringify(active_filter))}`,
     });
   };
